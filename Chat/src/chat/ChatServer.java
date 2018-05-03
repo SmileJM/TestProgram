@@ -52,7 +52,7 @@ public class ChatServer {
 		Runnable playerNoTask = () -> {
 			while(true) {
 				try {
-					Thread.sleep(1);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 				
 				}
@@ -107,17 +107,16 @@ public class ChatServer {
 						}
 						
 						String strData = new String(bytes, 0, readBytes);
+						
 						for (Client client : connections) {
 							client.send(strData);
 						}
 					}
 
-				} catch (IOException e1) {
-
 				} catch (Exception e2) {
 					clientInfo = "[" + socket.getRemoteSocketAddress() + " 연결 종료]";
 					connections.remove(Client.this);
-					serverInfo = "[" + connections.size() + " 명이 채팅 서버에 접속중입니다.]";
+					System.out.println(clientInfo);
 					try {
 						socket.close();
 					} catch (IOException e3) {
@@ -146,7 +145,9 @@ public class ChatServer {
 				outputStream.write(bytes);
 				outputStream.flush();
 			} catch (IOException e) {
+				clientInfo = "[" + socket.getRemoteSocketAddress() + " 연결 종료]";
 				connections.remove(Client.this);
+				System.out.println(clientInfo);
 				try {
 					socket.close();
 				} catch (IOException e1) {
