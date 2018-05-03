@@ -48,20 +48,20 @@ public class ChatServer {
 			}
 		};
 		executorService.submit(acceptTask);
-		
+
 		Runnable playerNoTask = () -> {
-			while(true) {
+			while (true) {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-				
+
 				}
-				if(connections.size() != playerNo) {
+				if (connections.size() != playerNo) {
 					serverInfo = "[" + connections.size() + " 명이 채팅 서버에 접속중입니다.]";
 					System.out.println(serverInfo);
 					playerNo = connections.size();
 				}
-				if(Thread.interrupted()) {
+				if (Thread.interrupted()) {
 					break;
 				}
 			}
@@ -74,7 +74,7 @@ public class ChatServer {
 		try {
 			for (Client client : connections) {
 				client.socket.close();
-				client.socket = null;				
+				client.socket = null;
 			}
 			connections.clear();
 			serverSocket.close();
@@ -101,13 +101,13 @@ public class ChatServer {
 					while (true) {
 						InputStream inputStream = socket.getInputStream();
 						byte[] bytes = new byte[100];
-						int readBytes = inputStream.read(bytes);						
+						int readBytes = inputStream.read(bytes);
 						if (readBytes == -1) {
 							throw new Exception();
 						}
-						
+
 						String strData = new String(bytes, 0, readBytes);
-						
+
 						for (Client client : connections) {
 							client.send(strData);
 						}
@@ -132,14 +132,14 @@ public class ChatServer {
 			try {
 				OutputStream outputStream = socket.getOutputStream();
 				String[] arrData = strData.split(",@@");
-				String message = "";				
-				if(arrData[1].equals("id1")) {
-					message = "["+arrData[0] +" 님이 채팅에 참여하였습니다.]";
-				} else if(arrData[1].equals("id2")) {
-					message = "["+arrData[0] +" 님이 채팅에서 나가셨습니다.]";
-				}else {
-					message= "[" +arrData[0] + "]: " + arrData[2];	
-				}			
+				String message = "";
+				if (arrData[1].equals("id1")) {
+					message = "[" + arrData[0] + " 님이 채팅에 참여하였습니다.]";
+				} else if (arrData[1].equals("id2")) {
+					message = "[" + arrData[0] + " 님이 채팅에서 나가셨습니다.]";
+				} else {
+					message = "[" + arrData[0] + "]: " + arrData[2];
+				}
 
 				byte[] bytes = message.getBytes();
 				outputStream.write(bytes);
@@ -162,14 +162,14 @@ public class ChatServer {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		server.startServer();
 		System.out.println("[서버종료: //exit]");
-		while(true) {
+		while (true) {
 			try {
 				String stop = br.readLine();
-				if(stop.equals("//exit")) {
+				if (stop.equals("//exit")) {
 					System.out.println("프로그램 종료");
 					server.stopServer();
-					break;	
-				}				
+					break;
+				}
 			} catch (IOException e) {
 			}
 		}
