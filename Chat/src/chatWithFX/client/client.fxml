@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chatWithFX.client.ClientController">
+   <center>
+      <TextArea fx:id="txtDisplay" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <Button fx:id="btnConn" mnemonicParsing="false" prefWidth="70.0" text="Connect" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Button fx:id="btnSend" mnemonicParsing="false" prefWidth="70.0" text="SEND" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <TextField fx:id="txtInput" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </BorderPane.margin>
+            </TextField>
+         </center>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </bottom>
+</BorderPane>
