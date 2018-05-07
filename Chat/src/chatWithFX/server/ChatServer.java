@@ -28,6 +28,7 @@ public class ChatServer extends Application{
          Scene scene = new Scene(parent);
          primaryStage.setTitle("Server");
          primaryStage.setScene(scene);
-         primaryStage.show();
+//         primaryStage.setOnCloseRequest(e -> ServerController.instance.stopServer());
+         primaryStage.show();         
     }
 }

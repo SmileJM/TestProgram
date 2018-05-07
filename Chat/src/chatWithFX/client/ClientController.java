@@ -37,6 +37,7 @@ public class ClientController implements Initializable {
     private TextArea txtDisplay;
 
     private Socket socket;
+    private String displayInfo;
 
     /**
      * Initializes the controller class.
@@ -49,23 +50,22 @@ public class ClientController implements Initializable {
 
     private void handleBtnConn(ActionEvent e) {
         if (btnConn.getText().equals("Connect")) {
-            btnConn.setText("Disconnect");
             startClient();
         } else {
-            btnConn.setText("Connect");
             stopClient();
         }
     }
 
     private void handleBtnSend(ActionEvent e) {
         send(txtInput);
-        txtInput.setText("");
+        txtInput.clear();
     }
 
     private void stopClient() {
         if(!socket.isClosed() && socket != null) {
             try {
                 socket.close();
+                Platform.runLater(()->btnConn.setText("Connect"));                
             } catch (IOException ex) {
                 
             }
@@ -76,9 +76,11 @@ public class ClientController implements Initializable {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress("192.168.0.4", 50001));
+            Platform.runLater(()->btnConn.setText("Disconnect"));     
             receive();
         } catch (IOException ex) {
-
+        	displayInfo = "[잠시후에 다시 시도해보세요~]";
+        	Platform.runLater(()->display(displayInfo));
         }
     }
 

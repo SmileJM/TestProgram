@@ -39,7 +39,8 @@ public class ServerController implements Initializable {
     private ExecutorService executorService;
     private ServerSocket serverSocket;
     private List<Client> connections = new Vector<>();
-
+    public static ServerController instance;
+    private boolean serverStart;
     /**
      * Initializes the controller class.
      */
@@ -51,10 +52,8 @@ public class ServerController implements Initializable {
     private void handleBtnStartStop(ActionEvent e) {
         if (btnStartStop.getText().equals("START")) {
             startServer();
-            btnStartStop.setText("STOP");
         } else {
             stopServer();
-            btnStartStop.setText("START");
         }
     }
 
@@ -73,13 +72,15 @@ public class ServerController implements Initializable {
                 btnStartStop.setText("STOP");
                 display("[Start Server]");
             });
+            serverStart = true;
 
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
-                    String clientInfo = "[" + socket.getRemoteSocketAddress() + " 접속]";
+                    String clientInfo = "[" + socket.getRemoteSocketAddress() + " 접속]";                    
                     Platform.runLater(() -> display(clientInfo));
                     Client client = new Client(socket);
+                    client.send(clientInfo);
                     connections.add(client);
                 } catch (IOException ex) {
                     stopServer();
@@ -90,21 +91,27 @@ public class ServerController implements Initializable {
         executorService.submit(acceptTask);
     }
 
-    private void stopServer() {
-        try {
-            for (Client client : connections) {
-                client.socket.close();
-            }
-            connections.clear();
-            serverSocket.close();
-            executorService.shutdownNow();
-            Platform.runLater(() -> {
-                display("[Stop Server]");
-                btnStartStop.setText("START");
-            });
-        } catch (IOException ex) {
+    public void stopServer() {
 
-        }
+		if(serverStart) {
+			Platform.runLater(() -> {
+	            display("[Stop Server]");
+	            btnStartStop.setText("START");               
+	        });   	
+	    	serverStart = false;
+	    	
+			try {
+	            for (Client client : connections) {
+	                client.socket.close();
+	            }                
+	            connections.clear();
+	            serverSocket.close();                
+	            executorService.shutdownNow();                
+	        } catch (Exception ex) {
+	        	
+	        }
+		}
+    	
     }
 
     private void display(String string) {
