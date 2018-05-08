@@ -28,6 +28,8 @@ public class ChatServer extends Application{
          Scene scene = new Scene(parent);
          primaryStage.setTitle("Server");
          primaryStage.setScene(scene);
+         primaryStage.setResizable(false);
+         // Eclipse 상에서 에러발생 / NetBeans 에서는 정상 작동 / 닫기 버튼 누르면 서버 종료
 //         primaryStage.setOnCloseRequest(e -> ServerController.instance.stopServer());
          primaryStage.show();         
     }

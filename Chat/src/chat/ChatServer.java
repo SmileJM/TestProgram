@@ -36,7 +36,7 @@ public class ChatServer {
 			while (true) {
 				try {
 					Socket socket = serverSocket.accept();
-					clientInfo = "[" + socket.getRemoteSocketAddress() + " ÀÇ ¿¬°áÀ» ¼ö¶ôÇÕ´Ï´Ù.]";
+					clientInfo = "[" + socket.getRemoteSocketAddress() + " ì˜ ì—°ê²°ì„ ìˆ˜ë½í•©ë‹ˆë‹¤.]";
 					System.out.println(clientInfo);
 
 					Client client = new Client(socket);
@@ -57,7 +57,7 @@ public class ChatServer {
 
 				}
 				if (connections.size() != playerNo) {
-					serverInfo = "[" + connections.size() + " ¸íÀÌ Ã¤ÆÃ ¼­¹ö¿¡ Á¢¼ÓÁßÀÔ´Ï´Ù.]";
+					serverInfo = "[" + connections.size() + " ëª…ì´ ì±„íŒ… ì„œë²„ì— ì ‘ì†ì¤‘ì…ë‹ˆë‹¤.]";
 					System.out.println(serverInfo);
 					playerNo = connections.size();
 				}
@@ -70,7 +70,7 @@ public class ChatServer {
 	}
 
 	private void stopServer() {
-		// client °´Ã¼, socket Á¦°Å
+		// client ê°ì²´, socket ì œê±°
 		try {
 			for (Client client : connections) {
 				client.socket.close();
@@ -80,7 +80,7 @@ public class ChatServer {
 			serverSocket.close();
 			executorService.shutdownNow();
 
-			serverInfo = "[¼­¹ö°¡ Á¾·áµÇ¾ú½À´Ï´Ù.]";
+			serverInfo = "[ì„œë²„ê°€ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.]";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,7 +114,7 @@ public class ChatServer {
 					}
 
 				} catch (Exception e2) {
-					clientInfo = "[" + socket.getRemoteSocketAddress() + " ¿¬°á Á¾·á]";
+					clientInfo = "[" + socket.getRemoteSocketAddress() + " ì—°ê²° ì¢…ë£Œ]";
 					connections.remove(Client.this);
 					System.out.println(clientInfo);
 					try {
@@ -134,9 +134,9 @@ public class ChatServer {
 				String[] arrData = strData.split(",@@");
 				String message = "";
 				if (arrData[1].equals("id1")) {
-					message = "[" + arrData[0] + " ´ÔÀÌ Ã¤ÆÃ¿¡ Âü¿©ÇÏ¿´½À´Ï´Ù.]";
+					message = "[" + arrData[0] + " ë‹˜ì´ ì±„íŒ…ì— ì°¸ì—¬í•˜ì˜€ìŠµë‹ˆë‹¤.]";
 				} else if (arrData[1].equals("id2")) {
-					message = "[" + arrData[0] + " ´ÔÀÌ Ã¤ÆÃ¿¡¼­ ³ª°¡¼Ì½À´Ï´Ù.]";
+					message = "[" + arrData[0] + " ë‹˜ì´ ì±„íŒ…ì—ì„œ ë‚˜ê°€ì…¨ìŠµë‹ˆë‹¤.]";
 				} else {
 					message = "[" + arrData[0] + "]: " + arrData[2];
 				}
@@ -145,7 +145,7 @@ public class ChatServer {
 				outputStream.write(bytes);
 				outputStream.flush();
 			} catch (IOException e) {
-				clientInfo = "[" + socket.getRemoteSocketAddress() + " ¿¬°á Á¾·á]";
+				clientInfo = "[" + socket.getRemoteSocketAddress() + " ì—°ê²° ì¢…ë£Œ]";
 				connections.remove(Client.this);
 				System.out.println(clientInfo);
 				try {
@@ -161,12 +161,12 @@ public class ChatServer {
 		ChatServer server = new ChatServer();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		server.startServer();
-		System.out.println("[¼­¹öÁ¾·á: //exit]");
+		System.out.println("[ì„œë²„ì¢…ë£Œ: //exit]");
 		while (true) {
 			try {
 				String stop = br.readLine();
 				if (stop.equals("//exit")) {
-					System.out.println("ÇÁ·Î±×·¥ Á¾·á");
+					System.out.println("í”„ë¡œê·¸ë¨ ì¢…ë£Œ");
 					server.stopServer();
 					break;
 				}

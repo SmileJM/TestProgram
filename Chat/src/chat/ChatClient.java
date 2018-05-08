@@ -16,7 +16,7 @@ public class ChatClient {
 	public static void main(String[] args) {
 		ChatClient client = new ChatClient();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("[¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.]: ");
+		System.out.print("[ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.]: ");
 
 		try {
 			id = br.readLine();
@@ -48,7 +48,7 @@ public class ChatClient {
 			}
 		}
 
-		System.out.println("client Á¾·á");
+		System.out.println("client ì¢…ë£Œ");
 	}
 
 	private void send(String message) {
@@ -75,13 +75,13 @@ public class ChatClient {
 				try {
 					socket = new Socket();
 					socket.connect(new InetSocketAddress("192.168.0.4", 50001));
-					clientInfo = "[Ã¤ÆÃ¼­¹ö¿Í ¿¬°áµÇ¾ú½À´Ï´Ù. Ã¤ÆÃÁ¾·á: //exit]";
+					clientInfo = "[ì±„íŒ…ì„œë²„ì™€ ì—°ê²°ë˜ì—ˆìŠµë‹ˆë‹¤. ì±„íŒ…ì¢…ë£Œ: //exit]";
 					send(id + ",@@id1,@@");
 					System.out.println(clientInfo);
 					receive();
 
 				} catch (IOException e) {
-					clientInfo = "[Ã¤ÆÃ¼­¹ö¿Í ¿¬°á¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù. ¿¬°á¿äÃ»: //connect]";
+					clientInfo = "[ì±„íŒ…ì„œë²„ì™€ ì—°ê²°ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ì—°ê²°ìš”ì²­: //connect]";
 					System.out.println(clientInfo);
 					stopClient(id);
 				}
@@ -106,7 +106,7 @@ public class ChatClient {
 						System.out.println(message);
 					}
 				} catch (Exception e) {
-					System.out.println("[Ã¤ÆÃ¼­¹ö¿ÍÀÇ ¿¬°áÀÌ ²÷°å½À´Ï´Ù. ¿¬°á¿äÃ»: //connect]");
+					System.out.println("[ì±„íŒ…ì„œë²„ì™€ì˜ ì—°ê²°ì´ ëŠê²¼ìŠµë‹ˆë‹¤. ì—°ê²°ìš”ì²­: //connect]");
 					stopClient(id);
 				}
 			}

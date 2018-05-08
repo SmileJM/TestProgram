@@ -28,6 +28,7 @@ public class ChatClient extends Application{
          Scene scene = new Scene(parent);
          primaryStage.setTitle("Client");
          primaryStage.setScene(scene);
+         primaryStage.setResizable(false);
          primaryStage.show();
     }
 }
