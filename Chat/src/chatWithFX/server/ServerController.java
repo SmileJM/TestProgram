@@ -178,29 +178,26 @@ public class ServerController implements Initializable {
 						InputStream is = socket.getInputStream();
 						Reader reader = new InputStreamReader(is, "UTF-8");
 						BufferedReader br = new BufferedReader(reader);
-						char[] data = new char[100];
+						char[] data = new char[200];
 						int readBytesNo = -1;
 
-						while (true) {
+						readBytesNo = br.read(data);
 
-							readBytesNo = br.read(data);
+						String strData = new String(data, 0, readBytesNo);
+						String[] arrData = strData.split(",@#");
+						String message = "";
 
-							String strData = new String(data, 0, readBytesNo);
-							String[] arrData = strData.split(",@#");
-							String message = "";
-							System.out.println(readBytesNo);
-							if (arrData.length == 1) {								
-								message = arrData[0];
-							} else if (arrData[1].equals("id3")) {
-								id = arrData[0];
-								message = "[" + id + "]: " + arrData[2];
-							} else {
-								message = "[" + arrData[0] + arrData[2] + "] (" + connections.size() + " 명 참여)";
-							}
-							System.out.println(message);
-							for (Client client : connections) {
-								client.send(message);
-							}
+						if (arrData.length == 1) {
+							message = arrData[0];
+						} else if (arrData[1].equals("id3")) {
+							id = arrData[0];
+							message = "[" + id + "]: " + arrData[2];
+						} else {
+							message = "[" + arrData[0] + arrData[2] + "] (" + connections.size() + " 명 참여)";
+						}
+
+						for (Client client : connections) {
+							client.send(message);
 						}
 					}
 				} catch (Exception ex) {

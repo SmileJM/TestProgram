@@ -72,6 +72,7 @@ public class ClientController implements Initializable {
 		btnReset.setOnAction(e -> handleBtnReset(e));
 		txtInput.setOnKeyPressed(e -> handleTxtInput(e));
 		txtId.setOnKeyPressed(e -> handleTxtId(e));
+		txtDisplay.setWrapText(true);
 	}
 
 	private void handleBtnReset(ActionEvent e) {
@@ -147,7 +148,6 @@ public class ClientController implements Initializable {
 				}
 			}
 		}
-
 	}
 
 	private void startClient() {
@@ -192,24 +192,21 @@ public class ClientController implements Initializable {
 			@Override
 			public void run() {
 				try {
-					char[] data = new char[100];
+					char[] data = new char[200];
 					while (true) {
 						InputStream is = socket.getInputStream();
 						Reader reader = new InputStreamReader(is, "UTF-8");
 						BufferedReader br = new BufferedReader(reader);
 						int readBytesNo = -1;
-						
-						while(true) {
-							readBytesNo = br.read(data);
-							System.out.println(readBytesNo);
-							if (readBytesNo == -1) {
-								// 서버 측에서 접속이 종료되었을 때
-								throw new Exception();
-							}
-							
-							String message = new String(data, 0, readBytesNo);
-							Platform.runLater(() -> display(message));
+
+						readBytesNo = br.read(data);
+						if (readBytesNo == -1) {
+							// 서버 측에서 접속이 종료되었을 때
+							throw new Exception();
 						}
+
+						String message = new String(data, 0, readBytesNo);
+						Platform.runLater(() -> display(message));
 					}
 				} catch (Exception ex) {
 					stopClient();
