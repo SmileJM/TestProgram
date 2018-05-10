@@ -72,8 +72,10 @@ public class ServerController implements Initializable {
 	}
 
 	private void handleBtnReset(ActionEvent e) {
-		txtIp.setText("192.168.0.4");
-		txtPort.setText("50001");
+		if(!serverStart) {
+			txtIp.setText("192.168.0.4");
+			txtPort.setText("50001");
+		}		
 	}
 
 	private void handleBtnStartStop(ActionEvent e) {
@@ -103,6 +105,7 @@ public class ServerController implements Initializable {
 			serverSocket = new ServerSocket();
 			serverSocket.bind(new InetSocketAddress(ip, Integer.parseInt(port)));
 		} catch (IOException ex) {
+			Platform.runLater(() -> display("[아이피 주소를 확인하세요!]"));
 			stopServer();
 			return;
 		}

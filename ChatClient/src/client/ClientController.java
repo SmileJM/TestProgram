@@ -76,10 +76,11 @@ public class ClientController implements Initializable {
 	}
 
 	private void handleBtnReset(ActionEvent e) {
-		txtIp.setText("192.168.0.4");
-		txtPort.setText("50001");
-		txtId.setText("");
-		stopClient();
+		if(!clientStart) {
+			txtIp.setText("192.168.0.4");
+			txtPort.setText("50001");
+			txtId.setText("");
+		}
 	}
 
 	private void handleTxtId(KeyEvent e) {
@@ -144,6 +145,8 @@ public class ClientController implements Initializable {
 						display("[채팅방에서 나왔습니다.]");
 					});
 					txtId.setEditable(true);
+					txtIp.setEditable(true);
+					txtPort.setEditable(true);
 				} catch (IOException ex) {
 				}
 			}
