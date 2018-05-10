@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatWithFX.server;
+package server;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -134,20 +135,20 @@ public class ServerController implements Initializable {
 	}
 
 	private void stopServer() {
-
 		if (serverStart) {
 			serverStart = false;
 			txtIp.setEditable(true);
 			txtPort.setEditable(true);
 
 			try {
-				for (Client client : connections) {
+				for (Client client : new Vector<>(connections)) {
 					client.socket.close();
 				}
 				connections.clear();
 				serverSocket.close();
 				executorService.shutdownNow();
 			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 
 			Platform.runLater(() -> {

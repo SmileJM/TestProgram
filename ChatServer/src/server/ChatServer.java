@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatWithFX.client;
+package server;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
  *
  * @author Smile
  */
-public class ChatClient extends Application {
+public class ChatServer extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -23,12 +24,13 @@ public class ChatClient extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent parent = FXMLLoader.load(getClass().getResource("client.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("server.fxml"));
 
 		Scene scene = new Scene(parent);
-		primaryStage.setTitle("Client");
+		primaryStage.setTitle("Server");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+		// X 버튼 누를때 프로그램 종료
 		primaryStage.setOnCloseRequest(e -> System.exit(0));
 		primaryStage.show();
 	}
